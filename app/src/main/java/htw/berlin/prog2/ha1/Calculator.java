@@ -45,10 +45,15 @@ public class Calculator {
      * im Ursprungszustand ist.
      */
     public void pressClearKey() {
-        screen = "0";
-        latestOperation = "";
-        latestValue = 0.0;
+        if (!screen.equals("0")) { // wenn screen nicht 0 ist
+            screen = "0";
+        } else { // wenn screen bereits 0 ist, alles löschen
+            screen = "0";
+            latestOperation = "";
+            latestValue = 0.0;
+        }
     }
+
 
     /**
      * Empfängt den Wert einer gedrückten binären Operationstaste, also eine der vier Operationen
@@ -126,7 +131,7 @@ public class Calculator {
             default -> throw new IllegalArgumentException();
         };
         screen = Double.toString(result);
-        if(screen.equals("Infinity")) screen = "Error";
+        if (screen.equals("Infinity") || screen.equals("-Infinity")) screen = "Error"; // -Infinity wird mit abgefangen
         if(screen.endsWith(".0")) screen = screen.substring(0,screen.length()-2);
         if(screen.contains(".") && screen.length() > 11) screen = screen.substring(0, 10);
     }
