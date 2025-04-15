@@ -106,5 +106,36 @@ class CalculatorTest {
 
         assertEquals(expected, actual);
     }
+
+    @Test
+    @DisplayName("should only clear screen but keep operation on first clear")
+    void testClearKey() {
+        Calculator calc = new Calculator();
+
+        calc.pressDigitKey(8);
+        calc.pressBinaryOperationKey("+");
+        calc.pressDigitKey(2);
+        calc.pressClearKey(); // soll eig nur Bildschirm löschen
+        calc.pressDigitKey(5);
+        calc.pressEqualsKey();
+        String expected = "13";
+        String actual = calc.readScreen();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void testNegativeDivisionByZeroShowsError() {
+        Calculator calc = new Calculator();
+        calc.pressDigitKey(5);
+        calc.pressNegativeKey();
+        calc.pressBinaryOperationKey("/");
+        calc.pressDigitKey(0);
+        calc.pressEqualsKey();
+
+        assertEquals("Error", calc.readScreen());
+    }
+
+
 }
 
